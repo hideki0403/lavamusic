@@ -30,9 +30,9 @@ export default {
     },
     icons: {
         youtube:
-            'https://cdn.discordapp.com/attachments/852316384289619968/1142853793822822551/3670147.png',
+            'https://i.imgur.com/T7G2Q0C.png',
         spotify:
-            'https://media.discordapp.net/attachments/963097935820750878/1054333449252655104/spotify.png',
+            'https://i.imgur.com/D0jUZXd.png',
         soundcloud:
             'https://media.discordapp.net/attachments/963097935820750878/1054333449638526986/145809.png',
         applemusic:
