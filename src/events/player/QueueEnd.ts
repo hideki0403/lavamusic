@@ -26,6 +26,11 @@ export default class QueueEnd extends Event {
         }
         await updateSetup(this.client, guild);
         this.client.utils.updateStatus(this.client, guild.id);
+
+        if (dispatcher.current === null) {
+            dispatcher.destroy();
+            return;
+        }
     }
 }
 
