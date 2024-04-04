@@ -41,6 +41,8 @@ export class Queue extends Map {
                 deaf: true,
             });
 
+            player.setGlobalVolume(this.client.config.defaultVolume);
+
             dispatcher = new Dispatcher({
                 client: this.client,
                 guildId: guild.id,
