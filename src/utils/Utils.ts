@@ -10,6 +10,9 @@ import {
 
 import config from '../config.js';
 import { Context, Lavamusic } from '../structures/index.js';
+import Logger from '../structures/Logger.js';
+
+const logger = new Logger();
 
 export class Utils {
     public static formatTime(ms: number): string {
@@ -29,8 +32,17 @@ export class Utils {
 
     public static updateStatus(client: Lavamusic, guildId?: string): void {
         if (client.user) {
+            const player = client.queue.get(guildId);
+
+            if (player) {
+                const status = player.current ? `▶ ${player.current.info.title} - ${player.current.info.author}` : '';
+                logger.log(`Updating status: ${status || 'Nothing playing'}`);
+                client.rest.put(`/channels/${player.voiceChannelId}/voice-status`, { body: {
+                    status,
+                }})
+            }
+
             if (guildId === config.guildId) {
-                const player = client.queue.get(config.guildId);
                 if (player && player.current) {
                     client.user.setActivity({
                         name: `🎶 | ${player.current.info.title}`,

@@ -35,6 +35,7 @@ export default class Dispatcher {
     private client: Lavamusic;
     public guildId: string;
     public channelId: string;
+    public voiceChannelId: string;
     public player: Player;
     public queue: Song[];
     public stopped: boolean;
@@ -55,6 +56,7 @@ export default class Dispatcher {
         this.client = options.client;
         this.guildId = options.guildId;
         this.channelId = options.channelId;
+        this.voiceChannelId = options.voiceChannelId;
         this.player = options.player;
         this.queue = [];
         this.stopped = false;
@@ -226,6 +228,7 @@ export interface DispatcherOptions {
     client: Lavamusic;
     guildId: string;
     channelId: string;
+    voiceChannelId: string;
     player: Player;
     node: Node;
 }

@@ -47,6 +47,7 @@ export class Queue extends Map {
                 client: this.client,
                 guildId: guild.id,
                 channelId: channel.id,
+                voiceChannelId: voice.id,
                 player,
                 node,
             });
