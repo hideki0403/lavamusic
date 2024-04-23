@@ -73,7 +73,7 @@ export default class VoiceStateUpdate extends Event {
                             player.destroy();
                         }
                     }
-                }, 5000);
+                }, 500);
             } else {
                 if (server) return;
                 setTimeout(async () => {
@@ -89,7 +89,7 @@ export default class VoiceStateUpdate extends Event {
                             player.destroy();
                         }
                     }
-                }, 5000);
+                }, 500);
             }
         }
     }
