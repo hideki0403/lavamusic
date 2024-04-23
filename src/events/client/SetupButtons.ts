@@ -80,8 +80,8 @@ export default class SetupButtons extends Event {
         if (message) {
             switch (interaction.customId) {
                 case 'LOW_VOL_BUT': {
-                    const vol = player.player.volume - 10;
-                    player.player.setGlobalVolume(vol);
+                    const vol = (player.player.volume * 10) - 10;
+                    player.player.setGlobalVolume(vol / 10);
                     await buttonReply(interaction, `Volume set to ${vol}%`, this.client.color.main);
                     await message.edit({
                         embeds: [
@@ -94,8 +94,8 @@ export default class SetupButtons extends Event {
                     break;
                 }
                 case 'HIGH_VOL_BUT': {
-                    const vol2 = player.player.volume + 10;
-                    player.player.setGlobalVolume(vol2);
+                    const vol2 = (player.player.volume * 10) + 10;
+                    player.player.setGlobalVolume(vol2 / 10);
                     await buttonReply(
                         interaction,
                         `Volume set to ${vol2}%`,

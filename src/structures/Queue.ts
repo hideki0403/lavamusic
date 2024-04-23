@@ -41,7 +41,7 @@ export class Queue extends Map {
                 deaf: true,
             });
 
-            player.setGlobalVolume(this.client.config.defaultVolume);
+            player.setGlobalVolume(this.client.config.defaultVolume / 10);
 
             dispatcher = new Dispatcher({
                 client: this.client,
