@@ -23,6 +23,7 @@ export default class InteractionCreate extends Event {
             interaction.type === InteractionType.ApplicationCommand
         ) {
             const { commandName } = interaction;
+            await this.client.db.get(interaction.guildId); // get or create guild data
             const command = this.client.commands.get(interaction.commandName);
             if (!command) return;
             const ctx = new Context(interaction as any, interaction.options.data as any);
@@ -40,7 +41,7 @@ export default class InteractionCreate extends Event {
                     .send({
                         content: `I don't have **\`SendMessage\`** permission in \`${interaction.guild.name}\`\nchannel: <#${interaction.channelId}>`,
                     })
-                    .catch(() => {});
+                    .catch(() => { });
             }
 
             if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.EmbedLinks))
@@ -97,7 +98,7 @@ export default class InteractionCreate extends Event {
 
                     if (
                         (interaction.member as GuildMember).voice.channel.type ===
-                            ChannelType.GuildStageVoice &&
+                        ChannelType.GuildStageVoice &&
                         !interaction.guild.members.me.permissions.has(
                             PermissionFlagsBits.RequestToSpeak
                         )
@@ -130,9 +131,9 @@ export default class InteractionCreate extends Event {
                         });
                 }
                 if (command.player.dj) {
-                    const dj = this.client.db.getDj(interaction.guildId);
+                    const dj = await this.client.db.getDj(interaction.guildId);
                     if (dj && dj.mode) {
-                        const djRole = this.client.db.getRoles(interaction.guildId);
+                        const djRole = await this.client.db.getRoles(interaction.guildId);
                         if (!djRole)
                             return await interaction.reply({
                                 content: 'DJ role is not set.',
@@ -197,7 +198,7 @@ export default class InteractionCreate extends Event {
                 await interaction.reply({ content: `An error occurred: \`${error}\`` });
             }
         } else if (interaction.type == InteractionType.ApplicationCommandAutocomplete) {
-            if (interaction.commandName == 'play') {
+            if ((interaction.commandName == 'play') || (interaction.commandName == 'playnext')) {
                 const song = interaction.options.getString('song');
                 const res = await this.client.queue.search(song);
                 let songs = [];
@@ -206,7 +207,7 @@ export default class InteractionCreate extends Event {
                         if (!res.data.length) return;
                         res.data.slice(0, 10).forEach(x => {
                             songs.push({
-                                name: x.info.title,
+                                name: `${x.info.title} by ${x.info.author}`,
                                 value: x.info.uri,
                             });
                         });
@@ -215,7 +216,7 @@ export default class InteractionCreate extends Event {
                         break;
                 }
 
-                return await interaction.respond(songs).catch(() => {});
+                return await interaction.respond(songs).catch(() => { });
             }
         }
     }
