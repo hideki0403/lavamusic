@@ -63,7 +63,7 @@ export default class Volume extends Command {
                         .setDescription('The volume can\'t be lower than 0.'),
                 ],
             });
-        player.player.setGlobalVolume(number / 10);
+        player.player.setGlobalVolume(Math.round(number / 10));
         return await ctx.sendMessage({
             embeds: [
                 embed
