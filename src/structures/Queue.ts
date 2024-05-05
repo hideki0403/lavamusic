@@ -1,5 +1,5 @@
 import { Guild } from 'discord.js';
-import { LavalinkResponse, Node } from 'shoukaku';
+import { FilterOptions, LavalinkResponse, Node } from 'shoukaku';
 
 import { Dispatcher, Lavamusic } from './index.js';
 export class Queue extends Map {
@@ -42,6 +42,16 @@ export class Queue extends Map {
             });
 
             player.setGlobalVolume(this.client.config.defaultVolume / 10);
+
+            const filters = player.filters as FilterOptions & { pluginFilters: Record<string, any> };
+            filters.pluginFilters = {
+                normalization: {
+                    maxAmplitude: 0.5,
+                    adaptive: true,
+                }
+            };
+
+            player.setFilters(filters);
 
             dispatcher = new Dispatcher({
                 client: this.client,
